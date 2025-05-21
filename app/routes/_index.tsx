@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Greeting from "~/components/Greeting";
 import Todoitem from "~/components/Todoitem";
 
@@ -16,7 +16,7 @@ export default function Index() {
   const [name, setName] = useState("Adzi")
   const [hobies, setHobies] = useState(["Coding", "watching Movie", "Reading"])
 
-  const [todos, setTodos] = useState([])
+  
 
   const increase = () => {
     setCounter(counter + 1)
@@ -25,6 +25,8 @@ export default function Index() {
   const changeName = () => {
     setName("John Doe")
   }
+
+  const [todos, setTodos] = useState([])
 
   // useEffect(() => {
 
@@ -48,6 +50,14 @@ export default function Index() {
     }
     
   })
+
+  const renderTodos = useMemo(() => {
+
+    return todos.map((data:any, index) => (
+      <Todoitem key={index} userId={data.userId} id={data.id} title={data.title} completed={data.completed} />
+    ))
+
+  },[todos])
   
 
   return (
@@ -64,10 +74,12 @@ export default function Index() {
 
         <div className="flex w-[500px] flex-col space-y-3">
 
-          {todos.map((data: any, index) => (
+          {/* {todos.map((data: any, index) => (
 
             <Todoitem key={index} userId={data.userId} id={data.id} title={data.title} completed={data.completed} />
-          ))}
+          ))} */}
+          
+          { renderTodos }
 
         </div>
         
