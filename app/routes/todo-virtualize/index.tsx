@@ -11,6 +11,7 @@ export default function Index() {
     const fetchResults = useCallback( async(searchTerm: string) => {
         
         setLoading(true);
+        
         try {
             const res = await fetch(`https://jsonplaceholder.typicode.com/todos?q=${encodeURIComponent(searchTerm)}`);
             const data = await res.json();
